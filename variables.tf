@@ -20,7 +20,7 @@ variable "availability_zone_count" {
 
 variable "default_vpc" {
   default     = false
-  description = "Instance type of the worker node."
+  description = "Use the default VPC for creating your cluster resources."
 }
 
 variable "vpc_id" {

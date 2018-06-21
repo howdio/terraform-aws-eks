@@ -33,7 +33,7 @@ Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the m
 | availability_zone_count | Number of availability zones used in the region. | string | `2` | no |
 | availability_zones | List of availability zones in the region | string | `<list>` | no |
 | cluster_subnet_ids | A list of VPC subnet IDs which the cluster uses. | string | `<list>` | no |
-| default_vpc | Instance type of the worker node. | string | `false` | no |
+| default_vpc | Use the default VPC for creating your cluster resources. | string | `false` | no |
 | enable_calico | When enabled, it will install Calico for network policy support. | string | `false` | no |
 | enable_dashboard | When enabled, it will install the Kubernetes Dashboard. | string | `false` | no |
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
