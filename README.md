@@ -1,3 +1,30 @@
+# AWS EKS Terraform module
+Terraform module which creates EKS resources on AWS.
+
+## Usage
+```hcl
+module "eks" {
+  source = "howdio/eks/aws"
+
+  name        = "cluster"
+  default_vpc = true
+
+  enable_kubectl   = true
+  enable_dashboard = true
+}
+```
+## Terraform version
+Terraform version 0.10.3 or newer is required for this module to work.
+
+## Kubenetes CLI
+Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the module to work.
+
+* [Kubernetes Client](https://kubernetes.io/docs/imported/release/notes/#client-binaries)
+* [Heptio Authenticator](https://github.com/heptio/authenticator)
+
+## Examples
+* [Basic](https://github.com/howdio/terraform-aws-eks/tree/master/examples/basic) - Basic Kubenetes cluster using the default VPC
+* [Advanced](https://github.com/howdio/terraform-aws-eks/tree/master/examples/advanced) - Advanced Kubernetes cluster using private/public subnets and multiple worker node groups.
 
 ## Inputs
 
