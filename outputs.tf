@@ -14,7 +14,7 @@ output "cluster_certificate" {
 }
 
 output "node_role" {
-  value       = "${module.cluster.node_instance_profile}"
+  value       = "${module.cluster.node_role}"
   description = "IAM Role which has the required policies to add the node to the cluster."
 }
 
