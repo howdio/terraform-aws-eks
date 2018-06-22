@@ -58,5 +58,6 @@ Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the m
 | kubeconfig | Kubernetes configuration file for accessing the cluster using the Kubernete CLI. |
 | node_instance_profile | IAM Instance Profile which has the required policies to add the node to the cluster. |
 | node_role | IAM Role which has the required policies to add the node to the cluster. |
+| node_role_arn | IAM Role ARN which has the required policies to add the node to the cluster. |
 | node_security_group | Security Group to be able to access to the Kubernetes Control Plane and other nodes. |
 

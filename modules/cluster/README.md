@@ -21,5 +21,6 @@
 | name | Cluster name provided when the cluster was created. |
 | node_instance_profile | IAM Instance Profile which has the required policies to add the node to the cluster. |
 | node_role | IAM Role which has the required policies to add the node to the cluster. |
+| node_role_arn | IAM Role ARN which has the required policies to add the node to the cluster. |
 | node_security_group | Security Group to be able to access to the Kubernetes Control Plane and other nodes. |
 
