@@ -29,6 +29,7 @@ module "eks" {
   node_subnet_ids    = ["${module.vpc.private_subnets}"]
 
   enable_kubectl   = true
+  enable_kube2iam  = true
   enable_dashboard = true
   enable_calico    = true
 }

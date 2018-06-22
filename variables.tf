@@ -82,3 +82,8 @@ variable "enable_calico" {
   default     = false
   description = "When enabled, it will install Calico for network policy support."
 }
+
+variable "enable_kube2iam" {
+  default     = false
+  description = "When enabled, it will install Kube2IAM to support assigning IAM roles to Pods."
+}
