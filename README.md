@@ -36,6 +36,7 @@ Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the m
 | default_vpc | Use the default VPC for creating your cluster resources. | string | `false` | no |
 | enable_calico | When enabled, it will install Calico for network policy support. | string | `false` | no |
 | enable_dashboard | When enabled, it will install the Kubernetes Dashboard. | string | `false` | no |
+| enable_kube2iam | When enabled, it will install Kube2IAM to support assigning IAM roles to Pods. | string | `false` | no |
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
 | key_pair | Adds an EC2 Key Pair to the cluster nodes. | string | `` | no |
 | name | Name to be used on all the resources as identifier. | string | - | yes |
@@ -60,4 +61,3 @@ Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the m
 | node_role | IAM Role which has the required policies to add the node to the cluster. |
 | node_role_arn | IAM Role ARN which has the required policies to add the node to the cluster. |
 | node_security_group | Security Group to be able to access to the Kubernetes Control Plane and other nodes. |
-

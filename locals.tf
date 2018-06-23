@@ -53,4 +53,77 @@ subjects:
   name: eks-admin
   namespace: kube-system
 EKSADMIN
+
+  kube2iam = <<KUBE2IAM
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube2iam
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: kube2iam
+  namespace: kube-system
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces","pods"]
+    verbs: ["get","watch","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kube2iam
+  namespace: kube-system
+subjects:
+- kind: ServiceAccount
+  name: kube2iam
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: kube2iam
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: kube2iam
+  namespace: kube-system
+  labels:
+    app: kube2iam
+spec:
+  template:
+    metadata:
+      labels:
+        name: kube2iam
+    spec:
+      serviceAccountName: kube2iam
+      hostNetwork: true
+      containers:
+        - image: jtblin/kube2iam:latest
+          name: kube2iam
+          args:
+            - "--auto-discover-base-arn"
+            - "--auto-discover-default-role"
+            - "--iptables=true"
+            - "--host-ip=$(HOST_IP)"
+            - "--host-interface=eni+"
+            - "--node=$(NODE_NAME)"
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          ports:
+            - containerPort: 8181
+              hostPort: 8181
+              name: http
+          securityContext:
+            privileged: true
+KUBE2IAM
 }
