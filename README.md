@@ -20,7 +20,7 @@ Terraform version 0.10.3 or newer is required for this module to work.
 Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the module to work.
 
 * [Kubernetes Client](https://kubernetes.io/docs/imported/release/notes/#client-binaries)
-* [Heptio Authenticator](https://github.com/heptio/authenticator)
+* [AWS IAM Authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
 
 ## Examples
 * [Basic](https://github.com/howdio/terraform-aws-eks/tree/master/examples/basic) - Basic Kubenetes cluster using the default VPC
@@ -40,11 +40,14 @@ Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the m
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
 | key_pair | Adds an EC2 Key Pair to the cluster nodes. | string | `` | no |
 | name | Name to be used on all the resources as identifier. | string | - | yes |
+| node_ami_id | AMI id for the node instances. | string | `` | no |
+| node_ami_lookup | AMI lookup name for the node instances. | string | `amazon-eks-node-*` | no |
 | node_instance_type | Instance type of the worker node. | string | `m5.large` | no |
 | node_max_size | Maximum size of the worker node AutoScaling Group. | string | `2` | no |
 | node_min_size | Minimum size of the worker node AutoScaling Group. | string | `1` | no |
 | node_subnet_ids | A list of VPC subnet IDs which the worker nodes are using. | string | `<list>` | no |
 | node_user_data | Additional user data used when bootstrapping the EC2 instance. | string | `` | no |
+| node_bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
 | version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
 | workstation_cidr_blocks | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |

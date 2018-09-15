@@ -33,6 +33,11 @@ variable "ami_id" {
   description = "AMI id for the node instances."
 }
 
+variable "ami_lookup" {
+  default     = "amazon-eks-node-*"
+  description = "AMI lookup name for the node instances."
+}
+
 variable "instance_type" {
   default     = "m5.large"
   description = "EC2 instance type for the node instances."
@@ -51,6 +56,11 @@ variable "min_size" {
 variable "max_size" {
   default     = 2
   description = "Maximum size of Node Group ASG."
+}
+
+variable "bootstrap_arguments" {
+  default     = ""
+  description = "Additional arguments when bootstrapping the EKS node."
 }
 
 variable "user_data" {

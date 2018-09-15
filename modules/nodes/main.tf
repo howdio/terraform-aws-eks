@@ -1,11 +1,12 @@
 resource "aws_launch_configuration" "node" {
-  iam_instance_profile = "${var.instance_profile}"
-  image_id             = "${local.ami_id}"
-  instance_type        = "${var.instance_type}"
-  name_prefix          = "${var.name}"
-  key_name             = "${var.key_pair}"
-  security_groups      = ["${var.security_groups}"]
-  user_data_base64     = "${base64encode(local.user_data)}"
+  iam_instance_profile        = "${var.instance_profile}"
+  image_id                    = "${local.ami_id}"
+  instance_type               = "${var.instance_type}"
+  name_prefix                 = "${var.name}"
+  key_name                    = "${var.key_pair}"
+  associate_public_ip_address = false
+  security_groups             = ["${var.security_groups}"]
+  user_data_base64            = "${base64encode(local.user_data)}"
 
   lifecycle {
     create_before_destroy = true

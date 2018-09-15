@@ -34,15 +34,16 @@ module "eks" {
   enable_calico    = true
 }
 
-module "eks_nodes_burst" {
+module "eks_nodes_gpu" {
   source = "../../modules/nodes"
 
-  name                = "advanced-burst"
+  name                = "advanced-gpu"
   cluster_name        = "${module.eks.cluster_name}"
   cluster_endpoint    = "${module.eks.cluster_endpoint}"
   cluster_certificate = "${module.eks.cluster_certificate}"
   security_groups     = ["${module.eks.node_security_group}"]
   subnet_ids          = "${module.vpc.private_subnets}"
-  instance_type       = "t2.large"
+  ami_lookup          = "amazon-eks-gpu-node-*"
+  instance_type       = "p3.2xlarge"
   instance_profile    = "${module.eks.node_instance_profile}"
 }
