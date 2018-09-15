@@ -5,6 +5,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | ami_id | AMI id for the node instances. | string | `` | no |
+| ami_lookup | AMI lookup name for the node instances. | string | `amazon-eks-node-*` | no |
 | cluster_certificate | Certificate used to authenticate to the Kubernetes Controle Plane. | string | - | yes |
 | cluster_endpoint | Endpoint of the Kubernetes Controle Plane. | string | - | yes |
 | cluster_name | Cluster name provided when the cluster was created. If it is incorrect, nodes will not be able to join the cluster. | string | - | yes |
@@ -17,4 +18,5 @@
 | security_groups | The security groups assigned to the worker nodes. If it is incorrect, nodes will not be able to reach each other. | list | - | yes |
 | subnet_ids | Subnet IDs where worker nodes can be created. | list | - | yes |
 | user_data | Additional user data used when bootstrapping the EC2 instance. | string | `` | no |
+| bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
 

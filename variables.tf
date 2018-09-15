@@ -33,6 +33,16 @@ variable "cluster_subnet_ids" {
   description = "A list of VPC subnet IDs which the cluster uses."
 }
 
+variable "node_ami_id" {
+  default     = ""
+  description = "AMI id for the node instances."
+}
+
+variable "node_ami_lookup" {
+  default     = "amazon-eks-node-*"
+  description = "AMI lookup name for the node instances."
+}
+
 variable "node_subnet_ids" {
   default     = []
   description = "A list of VPC subnet IDs which the worker nodes are using."
@@ -56,6 +66,11 @@ variable "node_max_size" {
 variable "node_user_data" {
   default     = ""
   description = "Additional user data used when bootstrapping the EC2 instance."
+}
+
+variable "node_bootstrap_arguments" {
+  default     = ""
+  description = "Additional arguments when bootstrapping the EKS node."
 }
 
 variable "workstation_cidr_blocks" {
