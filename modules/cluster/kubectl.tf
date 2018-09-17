@@ -32,7 +32,7 @@ resource "null_resource" "kubectl" {
 
 resource "null_resource" "aws_auth" {
   provisioner "local-exec" {
-    command = "kubectl apply --kubeconfig=./kubeconfig-${var.name}-cluster -f ./aws-auth.yaml"
+    command = "kubectl apply --kubeconfig=./kubeconfig-${var.name} -f ./aws-auth.yaml"
   }
 
   triggers {
