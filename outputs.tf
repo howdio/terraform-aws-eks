@@ -33,6 +33,11 @@ output "node_instance_profile" {
   description = "IAM Instance Profile which has the required policies to add the node to the cluster."
 }
 
+output "node_instance_profile_arn" {
+  value       = "${module.cluster.node_instance_profile_arn}"
+  description = "IAM Instance Profile ARN which has the required policies to add the node to the cluster."
+}
+
 output "kubeconfig" {
   value       = "${local.kubeconfig}"
   description = "Kubernetes configuration file for accessing the cluster using the Kubernete CLI."
