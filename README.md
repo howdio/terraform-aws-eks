@@ -17,7 +17,7 @@ module "eks" {
 Terraform version 0.10.3 or newer is required for this module to work.
 
 ## Kubenetes CLI
-Kubernetes CLI 1.10 or newer with the Heptio Authenticator is required for the module to work.
+Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the module to work.
 
 * [Kubernetes Client](https://kubernetes.io/docs/imported/release/notes/#client-binaries)
 * [AWS IAM Authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
