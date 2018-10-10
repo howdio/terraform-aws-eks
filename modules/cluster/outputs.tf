@@ -23,6 +23,11 @@ output "node_role_arn" {
   description = "IAM Role ARN which has the required policies to add the node to the cluster."
 }
 
+output "cluster_security_group" {
+  value       = "${aws_security_group.cluster.id}"
+  description = "Security Group between cluster and nodes."
+}
+
 output "node_security_group" {
   value       = "${aws_security_group.node.id}"
   description = "Security Group to be able to access to the Kubernetes Control Plane and other nodes."

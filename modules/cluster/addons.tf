@@ -1,10 +1,3 @@
-resource "local_file" "kubeconfig" {
-  count = "${var.enable_dashboard || var.enable_calico || var.enable_kube2iam ? 1 : 0}"
-
-  content  = "${local.kubeconfig}"
-  filename = "./kubeconfig-${var.name}"
-}
-
 # Dashboard
 resource "local_file" "eks_admin" {
   count = "${var.enable_dashboard ? 1 : 0}"
