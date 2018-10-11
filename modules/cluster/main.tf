@@ -4,7 +4,7 @@ terraform {
 
 # Cluster Security Group
 resource "aws_security_group" "cluster" {
-  name        = "${var.name}-eks-cluster"
+  name        = "${var.name}-cluster"
   description = "Cluster communication with worker nodes"
   vpc_id      = "${var.vpc_id}"
 
@@ -16,7 +16,7 @@ resource "aws_security_group" "cluster" {
   }
 
   tags {
-    Name = "${var.name}-eks-cluster"
+    Name = "${var.name}-cluster"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
 
 # Node Security Group
 resource "aws_security_group" "node" {
-  name        = "${var.name}-eks-node"
+  name        = "${var.name}-node"
   description = "Security group for all nodes in the cluster"
   vpc_id      = "${var.vpc_id}"
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "node" {
 
   tags = "${
     map(
-     "Name", "${var.name}-eks-node",
+     "Name", "${var.name}-node",
      "kubernetes.io/cluster/${var.name}", "owned",
     )
   }"
