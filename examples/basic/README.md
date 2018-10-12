@@ -1,7 +1,7 @@
 # Basic Kubernetes Cluster
-This is example will create a basic Kubernetes cluster using AWS EKS. It uses the account's default VPC and subnets to provision the worker nodes.
-
-Note that is not recommended to use this example with production workloads.
+This example will create:
+* a new VPC
+* a new EKS cluster with GPU capable working nodes (using both private and public subnets).
 
 ## Usage
 To run this example you need to execute:
