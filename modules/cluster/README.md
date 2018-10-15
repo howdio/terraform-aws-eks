@@ -26,6 +26,6 @@
 | cluster_security_group | Security Group between cluster and nodes. |
 | node_security_group | Security Group to be able to access to the Kubernetes Control Plane and other nodes. |
 | node_instance_profile | IAM Instance Profile which has the required policies to add the node to the cluster. |
-| node_instance_profile | IAM Instance Profile ARN which has the required policies to add the node to the cluster. |
+| node_instance_profile_arn | IAM Instance Profile ARN which has the required policies to add the node to the cluster. |
 | kubeconfig | Kubernetes configuration file for accessing the cluster using the Kubernete CLI. |
 
