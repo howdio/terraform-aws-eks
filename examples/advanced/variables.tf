@@ -25,11 +25,6 @@ variable "key-algorithm" {
   description = "The name of the algorithm to use for the key. Currently-supported values are RSA and ECDSA."
 }
 
-variable "ssh-cidr" {
-  default     = "83.241.166.2/32"
-  description = "The CIDR we're allowing incoming ssh connections to EKS nodes."
-}
-
 variable "node_ami_id" {
   default     = ""
   description = "AMI id for the node instances."
