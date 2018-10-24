@@ -1,121 +1,49 @@
-## PROVIDER
-## ----------------------------------------------------------------------------
 provider "aws" {
-  region = "${var.aws-region}"
+  region = "us-west-2"
 }
 
-## SSH-key
-## ----------------------------------------------------------------------------
-resource "null_resource" "output" {
-  provisioner "local-exec" {
-    command = "mkdir -p ./output/${var.name}"
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = "eks-gpu"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  private_subnets = ["10.0.64.0/19", "10.0.96.0/19", "10.0.128.0/19"]
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
+  tags = {
+    "kubernetes.io/cluster/eks-gpu" = "shared"
   }
 }
 
-resource "tls_private_key" "ssh-key" {
-  algorithm = "${var.key-algorithm}"
-  rsa_bits  = "${var.rsa-bits}"
-}
-
-resource "aws_key_pair" "ssh-key-pair" {
-  key_name   = "${var.name}-key"
-  public_key = "${tls_private_key.ssh-key.public_key_openssh}"
-}
-
-resource "local_file" "ssh-key" {
-  content  = "${tls_private_key.ssh-key.private_key_pem}"
-  filename = "./output/${var.name}/root.pem"
-
-  depends_on = [
-    "null_resource.output",
-  ]
-}
-
-resource "null_resource" "ssh-key" {
-  provisioner "local-exec" {
-    command = "chmod 600 ./output/${var.name}/root.pem"
-  }
-
-  triggers {
-    content = "${local_file.ssh-key.content}"
-  }
-
-  depends_on = [
-    "local_file.ssh-key",
-  ]
-}
-
-## EKS
-## ----------------------------------------------------------------------------
 module "eks" {
-  source = "../../modules/cluster/"
+  source = "../../modules/cluster"
 
-  name       = "${var.name}"
-  vpc_id     = "${data.aws_vpc.vpc-test.id}"
-  subnet_ids = ["${data.aws_subnet_ids.private.ids}"]
+  name               = "eks-gpu"
+  vpc_id             = "${module.vpc.vpc_id}"
+  cluster_subnet_ids = ["${module.vpc.private_subnets}", "${module.vpc.public_subnets}"]
+  node_subnet_ids    = ["${module.vpc.private_subnets}"]
 
-  enable_kubectl   = false
+  enable_kubectl   = true
   enable_kube2iam  = true
   enable_dashboard = true
   enable_calico    = true
 }
 
-module "jenkins-master" {
-  source = "../../modules/nodes/"
+module "eks_nodes_gpu" {
+  source = "../../modules/nodes"
 
-  name                = "${var.name}-m4-2xlarge"
-  cluster_name        = "${module.eks.name}"
-  cluster_endpoint    = "${module.eks.endpoint}"
-  cluster_certificate = "${module.eks.certificate}"
+  name                = "eks-gpu-gpu"
+  cluster_name        = "${module.eks.cluster_name}"
+  cluster_endpoint    = "${module.eks.cluster_endpoint}"
+  cluster_certificate = "${module.eks.cluster_certificate}"
   security_groups     = ["${module.eks.node_security_group}"]
+  subnet_ids          = "${module.vpc.private_subnets}"
+  ami_lookup          = "amazon-eks-gpu-node-*"
+  instance_type       = "p3.2xlarge"
   instance_profile    = "${module.eks.node_instance_profile}"
-  subnet_ids          = ["${data.aws_subnet_ids.private.ids}"]
-  ami_id              = "${var.node_ami_id}"
-  ami_lookup          = "${var.node_ami_lookup}"
-  instance_type       = "m4.2xlarge"
-  user_data           = "hostname ${var.name}-m4-2xlarge"
-  bootstrap_arguments = "${var.node_bootstrap_arguments}"
-  min_size            = 1
-  max_size            = 1
-  key_pair            = "${var.key_pair != "" ? var.key_pair : aws_key_pair.ssh-key-pair.key_name}"
-}
-
-module "cluster-nodes" {
-  source = "../../modules/nodes/"
-
-  name                = "${var.name}-c4-2xlarge"
-  cluster_name        = "${module.eks.name}"
-  cluster_endpoint    = "${module.eks.endpoint}"
-  cluster_certificate = "${module.eks.certificate}"
-  security_groups     = ["${module.eks.node_security_group}"]
-  instance_profile    = "${module.eks.node_instance_profile}"
-  subnet_ids          = ["${data.aws_subnet_ids.private.ids}"]
-  ami_id              = "${var.node_ami_id}"
-  ami_lookup          = "${var.node_ami_lookup}"
-  instance_type       = "m5.large"
-  user_data           = "hostname ${var.name}-c4-2xlarge"
-  bootstrap_arguments = "${var.node_bootstrap_arguments}"
-  min_size            = 1
-  max_size            = 5
-  key_pair            = "${var.key_pair != "" ? var.key_pair : aws_key_pair.ssh-key-pair.key_name}"
-}
-
-module "cluster-advanced-nodes" {
-  source = "../../modules/nodes/"
-
-  name                = "${var.name}-r4-xlarge"
-  cluster_name        = "${module.eks.name}"
-  cluster_endpoint    = "${module.eks.endpoint}"
-  cluster_certificate = "${module.eks.certificate}"
-  security_groups     = ["${module.eks.node_security_group}"]
-  instance_profile    = "${module.eks.node_instance_profile}"
-  subnet_ids          = ["${data.aws_subnet_ids.private.ids}"]
-  ami_id              = "${var.node_ami_id}"
-  ami_lookup          = "${var.node_ami_lookup}"
-  instance_type       = "r4.xlarge"
-  user_data           = "hostname ${var.name}-r4-xlarge"
-  bootstrap_arguments = "${var.node_bootstrap_arguments}"
-  min_size            = 1
-  max_size            = 5
-  key_pair            = "${var.key_pair != "" ? var.key_pair : aws_key_pair.ssh-key-pair.key_name}"
 }
