@@ -27,6 +27,7 @@ module "cluster" {
   vpc_id                  = "${local.vpc_id}"
   subnet_ids              = ["${local.cluster_subnet_ids}"]
   workstation_cidr_blocks = ["${var.workstation_cidr_blocks}"]
+  ssh_cidr                = "${var.ssh_cidr}"
   enable_kubectl          = "${var.enable_kubectl}"
   enable_dashboard        = "${var.enable_dashboard}"
   enable_calico           = "${var.enable_calico}"

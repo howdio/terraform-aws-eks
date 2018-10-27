@@ -40,6 +40,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | enable_kube2iam | When enabled, it will install Kube2IAM to support assigning IAM roles to Pods. | string | `false` | no |
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
 | key_pair | Adds an EC2 Key Pair to the cluster nodes. | string | `` | no |
+| ssh_cidr | The CIDR blocks from which to allow incoming ssh connections to the EKS nodes. | string | `<list>` | no |
 | name | Name to be used on all the resources as identifier. | string | - | yes |
 | node_ami_id | AMI id for the node instances. | string | `` | no |
 | node_ami_lookup | AMI lookup name for the node instances. | string | `amazon-eks-node-*` | no |

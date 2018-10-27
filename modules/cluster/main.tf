@@ -63,6 +63,18 @@ resource "aws_security_group_rule" "node_ingress_self" {
   type                     = "ingress"
 }
 
+resource "aws_security_group_rule" "node_allow_ssh" {
+  count = "${length(var.ssh_cidr) != 0 ? 1 : 0}"
+
+  description              = "The CIDR blocks from which to allow incoming ssh connections to the EKS nodes"
+  from_port                = 22
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.node.id}"
+  cidr_blocks              = ["${var.ssh_cidr}"]
+  to_port                  = 22
+  type                     = "ingress"
+}
+
 resource "aws_security_group_rule" "node_ingress_cluster" {
   description              = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
   from_port                = 1025

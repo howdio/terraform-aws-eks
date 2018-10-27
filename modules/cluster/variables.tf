@@ -23,6 +23,11 @@ variable "workstation_cidr_blocks" {
   description = "CIDR blocks from which to allow inbound traffic to the Kubernetes control plane."
 }
 
+variable "ssh_cidr" {
+  default     = ""
+  description = "The CIDR blocks from which to allow incoming ssh connections to the EKS nodes."
+}
+
 variable "enable_kubectl" {
   default     = false
   description = "When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config."

@@ -13,6 +13,7 @@
 | version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | - | yes |
 | workstation_cidr_blocks | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
+| ssh_cidr | The CIDR blocks from which to allow incoming ssh connections to the EKS nodes. | string | `<list>` | no |
 
 ## Outputs
 

@@ -83,6 +83,11 @@ variable "key_pair" {
   description = "Adds an EC2 Key Pair to the cluster nodes."
 }
 
+variable "ssh_cidr" {
+  default     = ""
+  description = "The CIDR blocks from which to allow incoming ssh connections to the EKS nodes."
+}
+
 variable "enable_kubectl" {
   default     = false
   description = "When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config."
