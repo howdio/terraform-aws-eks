@@ -73,7 +73,7 @@ variable "node_bootstrap_arguments" {
   description = "Additional arguments when bootstrapping the EKS node."
 }
 
-variable "workstation_cidr_blocks" {
+variable "workstation_cidr" {
   default     = []
   description = "CIDR blocks from which to allow inbound traffic to the Kubernetes control plane."
 }
@@ -81,6 +81,11 @@ variable "workstation_cidr_blocks" {
 variable "key_pair" {
   default     = ""
   description = "Adds an EC2 Key Pair to the cluster nodes."
+}
+
+variable "ssh_cidr" {
+  default     = ""
+  description = "The CIDR blocks from which to allow incoming ssh connections to the EKS nodes."
 }
 
 variable "enable_kubectl" {

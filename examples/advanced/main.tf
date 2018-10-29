@@ -5,7 +5,7 @@ provider "aws" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "advanced"
+  name = "eks-gpu"
   cidr = "10.0.0.0/16"
 
   azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
@@ -16,14 +16,14 @@ module "vpc" {
   single_nat_gateway = true
 
   tags = {
-    "kubernetes.io/cluster/advanced" = "shared"
+    "kubernetes.io/cluster/eks-gpu" = "shared"
   }
 }
 
 module "eks" {
-  source = "../../"
+  source = "../../modules/cluster"
 
-  name               = "advanced"
+  name               = "eks-gpu"
   vpc_id             = "${module.vpc.vpc_id}"
   cluster_subnet_ids = ["${module.vpc.private_subnets}", "${module.vpc.public_subnets}"]
   node_subnet_ids    = ["${module.vpc.private_subnets}"]
@@ -37,7 +37,7 @@ module "eks" {
 module "eks_nodes_gpu" {
   source = "../../modules/nodes"
 
-  name                = "advanced-gpu"
+  name                = "eks-gpu-gpu"
   cluster_name        = "${module.eks.cluster_name}"
   cluster_endpoint    = "${module.eks.cluster_endpoint}"
   cluster_certificate = "${module.eks.cluster_certificate}"

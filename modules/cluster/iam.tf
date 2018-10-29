@@ -64,6 +64,6 @@ resource "aws_iam_role_policy_attachment" "node_AmazonEC2ContainerRegistryReadOn
 }
 
 resource "aws_iam_instance_profile" "node" {
-  name = "${var.name}-eks"
+  name = "${var.name}"
   role = "${aws_iam_role.node.name}"
 }

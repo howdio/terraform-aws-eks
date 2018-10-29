@@ -1,13 +1,25 @@
-resource "local_file" "kubeconfig" {
-  count = "${var.enable_kubectl ? 1 : 0}"
+resource "null_resource" "output" {
+  provisioner "local-exec" {
+    command = "mkdir -p ${path.root}/output/${var.name}"
+  }
+}
 
+resource "local_file" "kubeconfig" {
   content  = "${local.kubeconfig}"
-  filename = "./kubeconfig-${var.name}-cluster"
+  filename = "${path.root}/output/${var.name}/kubeconfig-${var.name}"
+
+  depends_on = [
+    "null_resource.output",
+  ]
 }
 
 resource "local_file" "aws_auth" {
   content  = "${local.aws_auth}"
-  filename = "./aws-auth.yaml"
+  filename = "${path.root}/output/${var.name}/aws-auth.yaml"
+
+  depends_on = [
+    "null_resource.output",
+  ]
 }
 
 resource "null_resource" "kubectl" {
@@ -15,9 +27,9 @@ resource "null_resource" "kubectl" {
 
   provisioner "local-exec" {
     command = <<COMMAND
-      KUBECONFIG=~/.kube/config:./kubeconfig-${var.name}-cluster kubectl config view --flatten > ./kubeconfig_merged \
+      KUBECONFIG=~/.kube/config:${path.root}/output/${var.name}/kubeconfig-${var.name} kubectl config view --flatten > ./kubeconfig_merged \
       && mv ./kubeconfig_merged ~/.kube/config \
-      && kubectl config use-context eks-${var.name}
+      && kubectl config use-context ${var.name}
     COMMAND
   }
 
@@ -27,12 +39,13 @@ resource "null_resource" "kubectl" {
 
   depends_on = [
     "aws_eks_cluster.cluster",
+    "null_resource.output",
   ]
 }
 
 resource "null_resource" "aws_auth" {
   provisioner "local-exec" {
-    command = "kubectl apply --kubeconfig=./kubeconfig-${var.name} -f ./aws-auth.yaml"
+    command = "kubectl apply --kubeconfig=${path.root}/output/${var.name}/kubeconfig-${var.name} -f ${path.root}/output/${var.name}/aws-auth.yaml"
   }
 
   triggers {

@@ -1,5 +1,7 @@
-# Advanced Kubernetes Cluster
-This is example will create a more advanced Kubernetes cluster using AWS EKS.
+# Basic Kubernetes Cluster
+This example will create:
+* a new VPC
+* a new EKS cluster with GPU capable working nodes (using both private and public subnets).
 
 ## Usage
 To run this example you need to execute:

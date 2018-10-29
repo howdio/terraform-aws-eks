@@ -4,7 +4,7 @@ terraform {
 
 # Cluster Security Group
 resource "aws_security_group" "cluster" {
-  name        = "${var.name}-eks-cluster"
+  name        = "${var.name}-cluster"
   description = "Cluster communication with worker nodes"
   vpc_id      = "${var.vpc_id}"
 
@@ -16,12 +16,12 @@ resource "aws_security_group" "cluster" {
   }
 
   tags {
-    Name = "${var.name}-eks-cluster"
+    Name = "${var.name}-cluster"
   }
 }
 
 resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
-  count = "${length(var.workstation_cidr_blocks) != 0 ? 1 : 0}"
+  count = "${length(var.workstation_cidr) != 0 ? 1 : 0}"
 
   description       = "Allow workstation to communicate with the cluster API Server"
   type              = "ingress"
@@ -29,12 +29,12 @@ resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
   to_port           = 443
   protocol          = "tcp"
   security_group_id = "${aws_security_group.cluster.id}"
-  cidr_blocks       = ["${var.workstation_cidr_blocks}"]
+  cidr_blocks       = ["${var.workstation_cidr}"]
 }
 
 # Node Security Group
 resource "aws_security_group" "node" {
-  name        = "${var.name}-eks-node"
+  name        = "${var.name}-node"
   description = "Security group for all nodes in the cluster"
   vpc_id      = "${var.vpc_id}"
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "node" {
 
   tags = "${
     map(
-     "Name", "${var.name}-eks-node",
+     "Name", "${var.name}-node",
      "kubernetes.io/cluster/${var.name}", "owned",
     )
   }"
@@ -60,6 +60,18 @@ resource "aws_security_group_rule" "node_ingress_self" {
   security_group_id        = "${aws_security_group.node.id}"
   source_security_group_id = "${aws_security_group.node.id}"
   to_port                  = 65535
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "node_allow_ssh" {
+  count = "${length(var.ssh_cidr) != 0 ? 1 : 0}"
+
+  description              = "The CIDR blocks from which to allow incoming ssh connections to the EKS nodes"
+  from_port                = 22
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.node.id}"
+  cidr_blocks              = ["${var.ssh_cidr}"]
+  to_port                  = 22
   type                     = "ingress"
 }
 

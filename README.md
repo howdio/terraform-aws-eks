@@ -13,18 +13,19 @@ module "eks" {
   enable_dashboard = true
 }
 ```
+
 ## Terraform version
 Terraform version 0.10.3 or newer is required for this module to work.
 
-## Kubenetes CLI
+## Kubernetes CLI
 Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the module to work.
 
 * [Kubernetes Client](https://kubernetes.io/docs/imported/release/notes/#client-binaries)
 * [AWS IAM Authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
 
 ## Examples
-* [Basic](https://github.com/howdio/terraform-aws-eks/tree/master/examples/basic) - Basic Kubenetes cluster using the default VPC
-* [Advanced](https://github.com/howdio/terraform-aws-eks/tree/master/examples/advanced) - Advanced Kubernetes cluster using private/public subnets and multiple worker node groups.
+* [basic](https://github.com/howdio/terraform-aws-eks/tree/master/examples/basic) - Create an EKS cluster with GPU capable working nodes.
+* [advanced](https://github.com/howdio/terraform-aws-eks/tree/master/examples/advanced) - A more advanced Kubernetes cluster using AWS EKS with multiple instance types worker nodes.
 
 ## Inputs
 
@@ -39,6 +40,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | enable_kube2iam | When enabled, it will install Kube2IAM to support assigning IAM roles to Pods. | string | `false` | no |
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
 | key_pair | Adds an EC2 Key Pair to the cluster nodes. | string | `` | no |
+| ssh_cidr | The CIDR blocks from which to allow incoming ssh connections to the EKS nodes. | string | `<list>` | no |
 | name | Name to be used on all the resources as identifier. | string | - | yes |
 | node_ami_id | AMI id for the node instances. | string | `` | no |
 | node_ami_lookup | AMI lookup name for the node instances. | string | `amazon-eks-node-*` | no |
@@ -50,7 +52,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | node_bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
 | version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
-| workstation_cidr_blocks | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
+| workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
 
 ## Outputs
 
@@ -64,6 +66,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | node_instance_profile_arn | IAM Instance Profile ARN which has the required policies to add the node to the cluster. |
 | node_role | IAM Role which has the required policies to add the node to the cluster. |
 | node_role_arn | IAM Role ARN which has the required policies to add the node to the cluster. |
+| cluster_security_group | Security Group between cluster and nodes. |
 | node_security_group | Security Group to be able to access to the Kubernetes Control Plane and other nodes. |
 
 ## Contributors
