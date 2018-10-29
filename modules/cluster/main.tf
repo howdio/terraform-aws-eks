@@ -21,7 +21,7 @@ resource "aws_security_group" "cluster" {
 }
 
 resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
-  count = "${length(var.workstation_cidr_blocks) != 0 ? 1 : 0}"
+  count = "${length(var.workstation_cidr) != 0 ? 1 : 0}"
 
   description       = "Allow workstation to communicate with the cluster API Server"
   type              = "ingress"
@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
   to_port           = 443
   protocol          = "tcp"
   security_group_id = "${aws_security_group.cluster.id}"
-  cidr_blocks       = ["${var.workstation_cidr_blocks}"]
+  cidr_blocks       = ["${var.workstation_cidr}"]
 }
 
 # Node Security Group

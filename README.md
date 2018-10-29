@@ -52,7 +52,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | node_bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
 | version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
-| workstation_cidr_blocks | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
+| workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
 
 ## Outputs
 

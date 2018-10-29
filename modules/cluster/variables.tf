@@ -18,7 +18,7 @@ variable "subnet_ids" {
   description = "A list of VPC subnet IDs which the cluster uses."
 }
 
-variable "workstation_cidr_blocks" {
+variable "workstation_cidr" {
   default     = []
   description = "CIDR blocks from which to allow inbound traffic to the Kubernetes control plane."
 }

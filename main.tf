@@ -26,7 +26,7 @@ module "cluster" {
   version                 = "${var.version}"
   vpc_id                  = "${local.vpc_id}"
   subnet_ids              = ["${local.cluster_subnet_ids}"]
-  workstation_cidr_blocks = ["${var.workstation_cidr_blocks}"]
+  workstation_cidr        = ["${var.workstation_cidr}"]
   ssh_cidr                = "${var.ssh_cidr}"
   enable_kubectl          = "${var.enable_kubectl}"
   enable_dashboard        = "${var.enable_dashboard}"
