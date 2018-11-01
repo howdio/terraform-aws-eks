@@ -107,3 +107,8 @@ variable "enable_kube2iam" {
   default     = false
   description = "When enabled, it will install Kube2IAM to support assigning IAM roles to Pods."
 }
+
+variable "aws_auth" {
+  default     = ""
+  description = "Grant additional AWS users or roles the ability to interact with the EKS cluster."
+}

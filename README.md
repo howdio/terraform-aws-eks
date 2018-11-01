@@ -53,6 +53,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
 | workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
+| aws_auth | Grant additional AWS users or roles the ability to interact with the EKS cluster. | string | `<list>` | no |
 
 ## Outputs
 
