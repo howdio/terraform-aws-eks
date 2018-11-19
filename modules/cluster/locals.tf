@@ -39,6 +39,7 @@ data:
       groups:
         - system:bootstrappers
         - system:nodes
+${var.aws_auth}
 AWSAUTH
 
   eks_admin = <<EKSADMIN
