@@ -119,7 +119,7 @@ spec:
             - "--auto-discover-default-role"
             - "--iptables=true"
             - "--host-ip=$(HOST_IP)"
-            - "--host-interface=eni+"
+            - "--host-interface=${var.enable_calico ? "cali+" : "eni+"}"
             - "--node=$(NODE_NAME)"
           env:
             - name: HOST_IP
