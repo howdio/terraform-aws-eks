@@ -3,7 +3,7 @@ variable "name" {
   description = "Name to be used on all the resources as identifier."
 }
 
-variable "version" {
+variable "eks_version" {
   default     = "1.10"
   description = "Kubernetes version to use for the cluster."
 }

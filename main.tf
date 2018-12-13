@@ -23,7 +23,7 @@ module "cluster" {
   source = "./modules/cluster"
 
   name                    = "${var.name}"
-  version                 = "${var.version}"
+  eks_version             = "${var.eks_version}"
   vpc_id                  = "${local.vpc_id}"
   subnet_ids              = ["${local.cluster_subnet_ids}"]
   workstation_cidr        = ["${var.workstation_cidr}"]

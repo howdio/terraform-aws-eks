@@ -107,7 +107,7 @@ resource "aws_security_group_rule" "cluster-ingress-node-https" {
 
 resource "aws_eks_cluster" "cluster" {
   name     = "${var.name}"
-  version  = "${var.version}"
+  version  = "${var.eks_version}"
   role_arn = "${aws_iam_role.cluster.arn}"
 
   vpc_config {
