@@ -72,3 +72,8 @@ variable "key_pair" {
   default     = ""
   description = "The EC2 Key Pair to allow SSH access to the instances."
 }
+
+variable "spot_price" {
+  default     = ""
+  description = "The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand."
+}

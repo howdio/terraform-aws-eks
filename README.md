@@ -54,6 +54,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
 | workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
 | aws_auth | Grant additional AWS users or roles the ability to interact with the EKS cluster. | string | `<list>` | no |
+| spot_price | The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand. | string | `` | no |
 
 ## Outputs
 

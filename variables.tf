@@ -112,3 +112,8 @@ variable "aws_auth" {
   default     = ""
   description = "Grant additional AWS users or roles the ability to interact with the EKS cluster."
 }
+
+variable "spot_price" {
+  default     = ""
+  description = "The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand."
+}
