@@ -7,6 +7,7 @@ resource "aws_launch_configuration" "node" {
   associate_public_ip_address = false
   security_groups             = ["${var.security_groups}"]
   user_data_base64            = "${base64encode(local.user_data)}"
+  spot_price                  = "${var.spot_price}"
 
   lifecycle {
     create_before_destroy = true

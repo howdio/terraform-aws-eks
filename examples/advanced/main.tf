@@ -50,7 +50,7 @@ AWSAUTH
 module "eks_nodes_gpu" {
   source = "../../modules/nodes"
 
-  name                = "eks-gpu-gpu"
+  name                = "eks_nodes_gpu"
   cluster_name        = "${module.eks.name}"
   cluster_endpoint    = "${module.eks.endpoint}"
   cluster_certificate = "${module.eks.certificate}"
@@ -58,5 +58,22 @@ module "eks_nodes_gpu" {
   subnet_ids          = "${module.vpc.private_subnets}"
   ami_lookup          = "amazon-eks-gpu-node-*"
   instance_type       = "p3.2xlarge"
+  bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=on-demand"
   instance_profile    = "${module.eks.node_instance_profile}"
+}
+
+module "eks_nodes_gpu_spot" {
+  source = "../../modules/nodes"
+
+  name                = "eks_nodes_gpu_spot"
+  cluster_name        = "${module.eks.name}"
+  cluster_endpoint    = "${module.eks.endpoint}"
+  cluster_certificate = "${module.eks.certificate}"
+  security_groups     = ["${module.eks.node_security_group}"]
+  subnet_ids          = "${module.vpc.private_subnets}"
+  ami_lookup          = "amazon-eks-gpu-node-*"
+  instance_type       = "p3.2xlarge"
+  bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=spot"
+  instance_profile    = "${module.eks.node_instance_profile}"
+  spot_price          = "1.10"
 }

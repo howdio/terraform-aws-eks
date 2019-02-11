@@ -19,4 +19,5 @@
 | subnet_ids | Subnet IDs where worker nodes can be created. | list | - | yes |
 | user_data | Additional user data used when bootstrapping the EC2 instance. | string | `` | no |
 | bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
+| spot_price | The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand. | string | `` | no |
 
