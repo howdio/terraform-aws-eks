@@ -28,6 +28,16 @@ variable "vpc_id" {
   description = "ID of the VPC where to create the cluster resources."
 }
 
+variable "cluster_private_access" {
+  default     = false
+  description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
+}
+
+variable "cluster_public_access" {
+  default     = true
+  description = "Indicates whether or not the Amazon EKS public API server endpoint is enabled."
+}
+
 variable "cluster_subnet_ids" {
   default     = []
   description = "A list of VPC subnet IDs which the cluster uses."

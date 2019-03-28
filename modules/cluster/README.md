@@ -15,6 +15,8 @@
 | workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
 | ssh_cidr | The CIDR blocks from which to allow incoming ssh connections to the EKS nodes. | string | `<list>` | no |
 | aws_auth | Grant additional AWS users or roles the ability to interact with the EKS cluster. | string | `<list>` | no |
+| cluster_private_access | Indicates whether or not the Amazon EKS private API server endpoint is enabled. | string | `false` | no |
+| cluster_public_access | Indicates whether or not the Amazon EKS public API server endpoint is enabled. | string | `true` | no |
 
 ## Outputs
 

@@ -52,3 +52,13 @@ variable "aws_auth" {
   default     = ""
   description = "Grant additional AWS users or roles the ability to interact with the EKS cluster."
 }
+
+variable "cluster_private_access" {
+  default     = false
+  description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
+}
+
+variable "cluster_public_access" {
+  default     = true
+  description = "Indicates whether or not the Amazon EKS public API server endpoint is enabled."
+}
