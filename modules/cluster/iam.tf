@@ -3,6 +3,8 @@ resource "aws_iam_role" "cluster" {
   name = "EKSClusterRole-${var.name}"
 
   assume_role_policy = "${data.aws_iam_policy_document.cluster_assume_role.json}"
+  permissions_boundary  = "${var.permissions_boundary}"
+  force_detach_policies = true
 }
 
 data "aws_iam_policy_document" "cluster_assume_role" {
@@ -33,6 +35,8 @@ resource "aws_iam_role" "node" {
   name = "EKSNodeRole-${var.name}"
 
   assume_role_policy = "${data.aws_iam_policy_document.node_assume_role.json}"
+  permissions_boundary = "${var.permissions_boundary}"
+  force_detach_policies = true
 }
 
 data "aws_iam_policy_document" "node_assume_role" {

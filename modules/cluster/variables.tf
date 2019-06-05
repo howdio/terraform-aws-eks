@@ -53,6 +53,11 @@ variable "aws_auth" {
   description = "Grant additional AWS users or roles the ability to interact with the EKS cluster."
 }
 
+variable "permissions_boundary" {
+  default     = ""
+  description = "If provided, all IAM roles will be created with this permissions boundary attached."
+}
+
 variable "cluster_private_access" {
   default     = false
   description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
