@@ -52,6 +52,7 @@ Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the 
 | node_subnet_ids | A list of VPC subnet IDs which the worker nodes are using. | string | `<list>` | no |
 | node_user_data | Additional user data used when bootstrapping the EC2 instance. | string | `` | no |
 | node_bootstrap_arguments | Additional arguments when bootstrapping the EKS node. | string | `` | no |
+| node_disk_size | The root device size for the worker nodes. | string | `` | yes |
 | eks_version | Kubernetes version to use for the cluster. | string | `1.10` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | `` | no |
 | workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
