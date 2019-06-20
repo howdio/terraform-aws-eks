@@ -84,7 +84,7 @@ variable "node_bootstrap_arguments" {
 }
 
 variable "node_disk_size" {
-  default     = ""
+  default     = "20"
   description = "The root device size for the worker nodes."
 }
 
