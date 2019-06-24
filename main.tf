@@ -52,4 +52,5 @@ module "nodes" {
   min_size            = "${var.node_min_size}"
   max_size            = "${var.node_max_size}"
   key_pair            = "${var.key_pair}"
+  disk_size           = "${var.node_disk_size}"
 }

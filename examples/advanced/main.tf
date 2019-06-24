@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "1.66.0"
 
   name = "eks-gpu"
   cidr = "10.0.0.0/16"
@@ -60,6 +61,7 @@ module "eks_nodes_gpu" {
   instance_type       = "p3.2xlarge"
   bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=on-demand"
   instance_profile    = "${module.eks.node_instance_profile}"
+  disk_size           = "50"
 }
 
 module "eks_nodes_gpu_spot" {
@@ -76,4 +78,5 @@ module "eks_nodes_gpu_spot" {
   bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=spot"
   instance_profile    = "${module.eks.node_instance_profile}"
   spot_price          = "1.10"
+  disk_size           = "50"
 }

@@ -83,6 +83,11 @@ variable "node_bootstrap_arguments" {
   description = "Additional arguments when bootstrapping the EKS node."
 }
 
+variable "node_disk_size" {
+  default     = "20"
+  description = "The root device size for the worker nodes."
+}
+
 variable "workstation_cidr" {
   default     = []
   description = "CIDR blocks from which to allow inbound traffic to the Kubernetes control plane."

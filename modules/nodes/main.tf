@@ -9,6 +9,10 @@ resource "aws_launch_configuration" "node" {
   user_data_base64            = "${base64encode(local.user_data)}"
   spot_price                  = "${var.spot_price}"
 
+  root_block_device {
+    volume_size = "${var.disk_size}"
+  }
+
   lifecycle {
     create_before_destroy = true
   }

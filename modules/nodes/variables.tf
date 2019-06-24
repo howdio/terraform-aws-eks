@@ -63,6 +63,11 @@ variable "bootstrap_arguments" {
   description = "Additional arguments when bootstrapping the EKS node."
 }
 
+variable "disk_size" {
+  default     = ""
+  description = "The root device size for the worker nodes."
+}
+
 variable "user_data" {
   default     = ""
   description = "Additional user data used when bootstrapping the EC2 instance."
