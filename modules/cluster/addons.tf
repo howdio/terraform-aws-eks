@@ -1,17 +1,15 @@
 # Dashboard
 resource "local_file" "eks_admin" {
-  count = "${var.enable_dashboard ? 1 : 0}"
+  count = var.enable_dashboard ? 1 : 0
 
-  content  = "${local.eks_admin}"
+  content  = local.eks_admin
   filename = "${path.root}/output/${var.name}/eks-admin.yaml"
 
-  depends_on = [
-    "null_resource.output",
-  ]
+  depends_on = [null_resource.output]
 }
 
 resource "null_resource" "dashboard" {
-  count = "${var.enable_dashboard ? 1 : 0}"
+  count = var.enable_dashboard ? 1 : 0
 
   provisioner "local-exec" {
     command = <<COMMAND
@@ -25,48 +23,45 @@ resource "null_resource" "dashboard" {
     COMMAND
   }
 
-  triggers {
-    kubeconfig_rendered = "${local.kubeconfig}"
+  triggers = {
+    kubeconfig_rendered = local.kubeconfig
   }
 
-  depends_on = [
-    "local_file.eks_admin",
-  ]
+  depends_on = [local_file.eks_admin]
 }
 
 # kube2iam
 resource "local_file" "kube2iam" {
-  count = "${var.enable_kube2iam ? 1 : 0}"
+  count = var.enable_kube2iam ? 1 : 0
 
-  content  = "${local.kube2iam}"
+  content  = local.kube2iam
   filename = "${path.root}/output/${var.name}/kube2iam.yaml"
 
-  depends_on = [
-    "null_resource.output",
-  ]
+  depends_on = [null_resource.output]
 }
 
 resource "null_resource" "kube2iam" {
-  count = "${var.enable_kube2iam ? 1 : 0}"
+  count = var.enable_kube2iam ? 1 : 0
 
   provisioner "local-exec" {
     command = "kubectl apply -f ${path.root}/output/${var.name}/kube2iam.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
   }
 
-  triggers {
-    kubeconfig_rendered = "${local.kubeconfig}"
+  triggers = {
+    kubeconfig_rendered = local.kubeconfig
   }
 }
 
 # Calico
 resource "null_resource" "calico" {
-  count = "${var.enable_calico ? 1 : 0}"
+  count = var.enable_calico ? 1 : 0
 
   provisioner "local-exec" {
     command = "kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.0.0/config/v1.0/aws-k8s-cni-calico.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
   }
 
-  triggers {
-    kubeconfig_rendered = "${local.kubeconfig}"
+  triggers = {
+    kubeconfig_rendered = local.kubeconfig
   }
 }
+

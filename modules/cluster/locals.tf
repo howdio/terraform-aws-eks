@@ -4,7 +4,7 @@ apiVersion: v1
 clusters:
 - cluster:
     server: ${aws_eks_cluster.cluster.endpoint}
-    certificate-authority-data: ${aws_eks_cluster.cluster.certificate_authority.0.data}
+    certificate-authority-data: ${aws_eks_cluster.cluster.certificate_authority[0].data}
   name: ${aws_eks_cluster.cluster.name}
 contexts:
 - context:
@@ -26,6 +26,7 @@ users:
         - "${aws_eks_cluster.cluster.name}"
 KUBECONFIG
 
+
   aws_auth = <<AWSAUTH
 apiVersion: v1
 kind: ConfigMap
@@ -41,6 +42,7 @@ data:
         - system:nodes
 ${var.aws_auth}
 AWSAUTH
+
 
   eks_admin = <<EKSADMIN
 apiVersion: v1
@@ -64,6 +66,7 @@ subjects:
   name: eks-admin
   namespace: kube-system
 EKSADMIN
+
 
   kube2iam = <<KUBE2IAM
 apiVersion: v1
@@ -137,4 +140,6 @@ spec:
           securityContext:
             privileged: true
 KUBE2IAM
+
 }
+
