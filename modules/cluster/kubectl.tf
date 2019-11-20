@@ -23,8 +23,11 @@ resource "null_resource" "kubectl" {
 
   provisioner "local-exec" {
     command = <<COMMAND
-      KUBECONFIG=~/.kube/config:${path.root}/output/${var.name}/kubeconfig-${var.name} kubectl config view --flatten > ./kubeconfig_merged \
-      && mv ./kubeconfig_merged ~/.kube/config \
+      kubectl config unset users.${var.name} \
+      && kubectl config unset contexts.${var.name} \
+      && kubectl config unset clusters.${var.name} \
+      && KUBECONFIG=~/.kube/config:./output/${var.name}/kubeconfig-${var.name} kubectl config view --flatten > ./output/${var.name}/kubeconfig_merged \
+      && mv ./output/${var.name}/kubeconfig_merged ~/.kube/config
       && kubectl config use-context ${var.name}
     COMMAND
   }
