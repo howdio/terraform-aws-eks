@@ -14,7 +14,7 @@ resource "null_resource" "dashboard" {
   provisioner "local-exec" {
     command = <<COMMAND
       export KUBECONFIG=${path.root}/output/${var.name}/kubeconfig-${var.name} \
-      && kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml \
+      && kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml \
       && kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml \
       && kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml \
       && kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml \
@@ -57,7 +57,7 @@ resource "null_resource" "calico" {
   count = var.enable_calico ? 1 : 0
 
   provisioner "local-exec" {
-    command = "kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.0.0/config/v1.0/aws-k8s-cni-calico.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
+    command = "kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.5/config/v1.5/aws-k8s-cni.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
   }
 
   triggers = {
