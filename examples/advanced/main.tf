@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "1.66.0"
+  version = "v2.18.0"
 
   name = "eks-gpu"
   cidr = "10.0.0.0/16"
@@ -24,9 +24,9 @@ module "vpc" {
 module "eks" {
   source = "../../modules/cluster"
 
-  name               = "eks-gpu"
-  vpc_id             = "${module.vpc.vpc_id}"
-  subnet_ids         = ["${module.vpc.private_subnets}", "${module.vpc.public_subnets}"]
+  name       = "eks-gpu"
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = flatten([module.vpc.private_subnets, module.vpc.public_subnets])
 
   enable_kubectl   = true
   enable_kube2iam  = true
@@ -35,7 +35,7 @@ module "eks" {
 
   # More details here:
   # https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
-  aws_auth         = <<AWSAUTH
+  aws_auth = <<AWSAUTH
   mapUsers: |
     - userarn: arn:aws:iam::555555555555:user/admin
       username: admin
@@ -52,15 +52,15 @@ module "eks_nodes_gpu" {
   source = "../../modules/nodes"
 
   name                = "eks_nodes_gpu"
-  cluster_name        = "${module.eks.name}"
-  cluster_endpoint    = "${module.eks.endpoint}"
-  cluster_certificate = "${module.eks.certificate}"
-  security_groups     = ["${module.eks.node_security_group}"]
-  subnet_ids          = "${module.vpc.private_subnets}"
+  cluster_name        = module.eks.name
+  cluster_endpoint    = module.eks.endpoint
+  cluster_certificate = module.eks.certificate
+  security_groups     = [module.eks.node_security_group]
+  subnet_ids          = flatten([module.vpc.private_subnets])
   ami_lookup          = "amazon-eks-gpu-node-*"
   instance_type       = "p3.2xlarge"
   bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=on-demand"
-  instance_profile    = "${module.eks.node_instance_profile}"
+  instance_profile    = module.eks.node_instance_profile
   disk_size           = "50"
 }
 
@@ -68,15 +68,16 @@ module "eks_nodes_gpu_spot" {
   source = "../../modules/nodes"
 
   name                = "eks_nodes_gpu_spot"
-  cluster_name        = "${module.eks.name}"
-  cluster_endpoint    = "${module.eks.endpoint}"
-  cluster_certificate = "${module.eks.certificate}"
-  security_groups     = ["${module.eks.node_security_group}"]
-  subnet_ids          = "${module.vpc.private_subnets}"
+  cluster_name        = module.eks.name
+  cluster_endpoint    = module.eks.endpoint
+  cluster_certificate = module.eks.certificate
+  security_groups     = [module.eks.node_security_group]
+  subnet_ids          = module.vpc.private_subnets
   ami_lookup          = "amazon-eks-gpu-node-*"
   instance_type       = "p3.2xlarge"
   bootstrap_arguments = "--kubelet-extra-args --node-labels=billing=spot"
-  instance_profile    = "${module.eks.node_instance_profile}"
+  instance_profile    = module.eks.node_instance_profile
   spot_price          = "1.10"
   disk_size           = "50"
 }
+

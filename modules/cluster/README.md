@@ -10,7 +10,7 @@
 | enable_kubectl | When enabled, it will merge the cluster's configuration with the one located in ~/.kube/config. | string | `false` | no |
 | name | Name to be used on all the EKS Cluster resources as identifier. | string | - | yes |
 | subnet_ids | A list of VPC subnet IDs which the cluster uses. | string | `<list>` | no |
-| eks_version | Kubernetes version to use for the cluster. | string | `1.10` | no |
+| eks_version | Kubernetes version to use for the cluster. | string | `1.14` | no |
 | vpc_id | ID of the VPC where to create the cluster resources. | string | - | yes |
 | workstation_cidr | CIDR blocks from which to allow inbound traffic to the Kubernetes control plane. | string | `<list>` | no |
 | ssh_cidr | The CIDR blocks from which to allow incoming ssh connections to the EKS nodes. | string | `<list>` | no |

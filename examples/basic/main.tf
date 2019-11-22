@@ -12,3 +12,4 @@ module "eks" {
   enable_dashboard = true
   enable_kube2iam  = true
 }
+

@@ -1,30 +1,30 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Unique identifier for the Node Group."
 }
 
 variable "cluster_name" {
-  type        = "string"
+  type        = string
   description = "Cluster name provided when the cluster was created. If it is incorrect, nodes will not be able to join the cluster."
 }
 
 variable "cluster_endpoint" {
-  type        = "string"
+  type        = string
   description = "Endpoint of the Kubernetes Controle Plane."
 }
 
 variable "cluster_certificate" {
-  type        = "string"
+  type        = string
   description = "Certificate used to authenticate to the Kubernetes Controle Plane."
 }
 
 variable "subnet_ids" {
-  type        = "list"
+  type        = list(string)
   description = "Subnet IDs where worker nodes can be created."
 }
 
 variable "security_groups" {
-  type        = "list"
+  type        = list(string)
   description = "The security groups assigned to the worker nodes. If it is incorrect, nodes will not be able to reach each other."
 }
 
@@ -44,7 +44,7 @@ variable "instance_type" {
 }
 
 variable "instance_profile" {
-  type        = "string"
+  type        = string
   description = "IAM Instance Profile which has the required policies to add the node to the cluster."
 }
 
@@ -82,3 +82,4 @@ variable "spot_price" {
   default     = ""
   description = "The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand."
 }
+

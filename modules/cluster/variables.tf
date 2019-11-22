@@ -1,15 +1,15 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Name to be used on all the EKS Cluster resources as identifier."
 }
 
 variable "eks_version" {
-  default     = "1.10"
+  default     = "1.14"
   description = "Kubernetes version to use for the cluster."
 }
 
 variable "vpc_id" {
-  type        = "string"
+  type        = string
   description = "ID of the VPC where to create the cluster resources."
 }
 
@@ -67,3 +67,4 @@ variable "cluster_public_access" {
   default     = true
   description = "Indicates whether or not the Amazon EKS public API server endpoint is enabled."
 }
+

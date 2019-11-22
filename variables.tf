@@ -1,10 +1,10 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "Name to be used on all the resources as identifier."
 }
 
 variable "eks_version" {
-  default     = "1.10"
+  default     = "1.14"
   description = "Kubernetes version to use for the cluster."
 }
 
@@ -84,7 +84,7 @@ variable "node_bootstrap_arguments" {
 }
 
 variable "node_disk_size" {
-  default     = "20"
+  default     = 20
   description = "The root device size for the worker nodes."
 }
 
@@ -132,3 +132,4 @@ variable "spot_price" {
   default     = ""
   description = "The maximum price to use for reserving spot instances. If set, the worker nodes will be spawned as spot instances instead of on demand."
 }
+
