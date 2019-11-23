@@ -15,7 +15,7 @@ module "eks" {
 ```
 
 ## Terraform version
-Terraform version 0.10.3 or newer is required for this module to work.
+Terraform version 0.12+ or newer is required for this module to work.
 
 ## Kubernetes CLI
 Kubernetes CLI 1.10 or newer with the AWS IAM Authenticator is required for the module to work.
