@@ -57,7 +57,7 @@ resource "null_resource" "calico" {
   count = var.enable_calico ? 1 : 0
 
   provisioner "local-exec" {
-    command = "kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.5/config/v1.5/aws-k8s-cni.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
+    command = "kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.6.1/config/v1.6/aws-k8s-cni.yaml --kubeconfig ${path.root}/output/${var.name}/kubeconfig-${var.name}"
   }
 
   triggers = {
