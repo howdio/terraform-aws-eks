@@ -27,7 +27,7 @@ resource "null_resource" "kubectl" {
       && kubectl config unset contexts.${var.name} \
       && kubectl config unset clusters.${var.name} \
       && KUBECONFIG=~/.kube/config:./output/${var.name}/kubeconfig-${var.name} kubectl config view --flatten > ./output/${var.name}/kubeconfig_merged \
-      && mv ./output/${var.name}/kubeconfig_merged ~/.kube/config
+      && mv ./output/${var.name}/kubeconfig_merged ~/.kube/config \
       && kubectl config use-context ${var.name}
     COMMAND
   }
