@@ -28,6 +28,7 @@ module "cluster" {
   enable_dashboard = var.enable_dashboard
   enable_calico    = var.enable_calico
   enable_kube2iam  = var.enable_kube2iam
+  aws_auth         = var.aws_auth
 }
 
 module "nodes" {
@@ -49,5 +50,6 @@ module "nodes" {
   max_size            = var.node_max_size
   key_pair            = var.key_pair
   disk_size           = var.node_disk_size
+  spot_price          = var.spot_price
 }
 
