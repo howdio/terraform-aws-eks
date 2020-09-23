@@ -28,6 +28,7 @@ module "cluster" {
   enable_dashboard = var.enable_dashboard
   enable_calico    = var.enable_calico
   enable_kube2iam  = var.enable_kube2iam
+  aws_auth         = var.aws_auth
 }
 
 module "nodes" {
